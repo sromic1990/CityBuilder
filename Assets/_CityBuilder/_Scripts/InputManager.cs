@@ -1,15 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class InputManager : MonoBehaviour
 {
-    public LayerMask mouseInputMask;
-    public Camera inputCamera;
+    [SerializeField] private LayerMask _mouseInputMask;
+    [SerializeField] private Camera _inputCamera;
 
-    // public GameObject buildingPrefab;
-    // Update is called once per frame
+    private Action<Vector3> onPointerDownHandler;
+    
+    
     void Update()
     {
         GetInput();
@@ -19,19 +21,28 @@ public class InputManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            var ray = inputCamera.ScreenPointToRay(Input.mousePosition);
+            var ray = _inputCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, mouseInputMask))
+            if (Physics.Raycast(ray.origin, ray.direction, out hit, Mathf.Infinity, _mouseInputMask))
             {
                 Vector3 position = hit.point - transform.position;
+                // Debug.Log(position);
+                if (onPointerDownHandler != null)
+                {
+                    onPointerDownHandler.Invoke(position);
+                }
             }
         }
     }
 
-    // private void CreateBuilding(Vector3 gridPosition)
-    // {
-    //     Instantiate(buildingPrefab, gridPosition, Quaternion.identity);
-    // }
+    public void AddListenerOnPointerDownEvent(Action<Vector3> listener)
+    {
+        onPointerDownHandler += listener;
+    }
+    public void RemoveListenerOnPointerDownEvent(Action<Vector3> listener)
+    {
+        onPointerDownHandler -= listener;
+    }
 }
 
 
