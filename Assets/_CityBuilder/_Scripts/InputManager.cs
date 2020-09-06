@@ -11,7 +11,6 @@ public class InputManager : MonoBehaviour
 
     private Action<Vector3> onPointerDownHandler;
     
-    
     void Update()
     {
         GetInput();
