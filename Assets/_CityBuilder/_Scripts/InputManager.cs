@@ -4,7 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InputManager : MonoBehaviour
+public interface IInputManager
+{
+    void AddListenerOnPointerDownEvent(Action<Vector3> listener);
+    void RemoveListenerOnPointerDownEvent(Action<Vector3> listener);
+}
+
+public class InputManager : MonoBehaviour, IInputManager
 {
     [SerializeField] private LayerMask _mouseInputMask;
     [SerializeField] private Camera _inputCamera;
@@ -16,7 +22,7 @@ public class InputManager : MonoBehaviour
         GetInput();
     }
 
-    public void GetInput()
+    private void GetInput()
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {

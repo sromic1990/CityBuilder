@@ -95,7 +95,7 @@ namespace Tests
         [Test]
         public void PlaceStructure303AndCheckIsTakenNullObjectFails()
         {
-            Vector3 position = new Vector3(297, 0, 297);
+            Vector3 position = new Vector3(3, 0, 3);
             //Act
             GameObject testGameObject = null;
             _structure.PlaceStructureOnTheGrid(testGameObject, position);

@@ -1,3 +1,15 @@
-﻿{
-	"name": "ProjectAssembly"
+{
+    "name": "ProjectAssembly",
+    "references": [
+        "GUID:8930872769db448a9bedecb3cf4f70b8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
