@@ -8,8 +8,35 @@ using Sourav.Utilities.Extensions;
 public class UiController : MonoBehaviour
 {
     [SerializeField] private Button _buildResidentialAreaButton;
+
+    public Button BuildResidentialAreaButton
+    {
+        get { return _buildResidentialAreaButton;}
+        set
+        {
+            _buildResidentialAreaButton = value;
+        }
+    }
     [SerializeField] private Button _cancelActionButton;
+
+    public Button CancelActionButton
+    {
+        get { return _cancelActionButton;}
+        set
+        {
+            _cancelActionButton = value;
+        }
+    }
     [SerializeField] private GameObject _cancelActionPanel;
+
+    public GameObject CancelActionPanel
+    {
+        get { return _cancelActionPanel;}
+        set
+        {
+            _cancelActionPanel = value;
+        }
+    }
 
     private Action onBuildAreaHandler;
     private Action onCancelActionHandler;
