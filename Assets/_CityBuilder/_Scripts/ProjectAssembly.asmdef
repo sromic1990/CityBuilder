@@ -1,7 +1,8 @@
 {
     "name": "ProjectAssembly",
     "references": [
-        "GUID:8930872769db448a9bedecb3cf4f70b8"
+        "GUID:8930872769db448a9bedecb3cf4f70b8",
+        "GUID:c2f14d07dfb47494d8bbf818e365348b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
