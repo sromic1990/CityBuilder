@@ -15,4 +15,15 @@ public class Cell
         this._structureModel = structureModel;
         this._isTaken = true;
     }
+
+    public GameObject GetStructure()
+    {
+        return _structureModel;
+    }
+
+    public void RemoveStructure()
+    {
+        _structureModel = null;
+        _isTaken = false;
+    }
 }

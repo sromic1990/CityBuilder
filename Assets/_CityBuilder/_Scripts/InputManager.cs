@@ -1,26 +1,19 @@
-﻿using System;
+﻿//TODO Create a Camera from Camera factory in case camera is not found on awake.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public interface IInputManager
-{
-    void AddListenerOnPointerDownEvent(Action<Vector3> listener);
-    void RemoveListenerOnPointerDownEvent(Action<Vector3> listener);
-    void AddListenerOnPointerUpEvent(Action listener);
-    void RemoveListenerOnPointerUpEvent(Action listener);
-    void AddListenerOnPointerChangeEvent(Action<Vector3> listener);
-    void RemoveListenerOnPointerChangeEvent(Action<Vector3> listener);
-    void AddListenerOnPointerSecondChangeEvent(Action<Vector3> listener);
-    void RemoveListenerOnPointerSecondChangeEvent(Action<Vector3> listener);
-    void AddListenerOnPointerSecondUpEvent(Action listener);
-    void RemoveListenerOnPointerSecondUpEvent(Action listener);
-}
-
 public class InputManager : MonoBehaviour, IInputManager
 {
     [SerializeField] private LayerMask _mouseInputMask;
+    public LayerMask MouseInputMask
+    {
+        get => _mouseInputMask;
+        set => _mouseInputMask = value;
+    }
     [SerializeField] private Camera _inputCamera;
 
     private Action<Vector3> onPointerDownHandler;
@@ -28,7 +21,35 @@ public class InputManager : MonoBehaviour, IInputManager
     private Action<Vector3> onPointerChangeHandler;
     private Action<Vector3> onPointerSecondChangeHandler;
     private Action onPointerSecondUpHandler;
-    
+
+    private void Awake()
+    {
+        SetUpInputCamera();
+    }
+
+    private void SetUpInputCamera()
+    {
+        #if CAMERA_FACTORY
+        Camera[] cameras = FindObjectsOfType<Camera>();
+        for (int i = 0; i < cameras.Length; i++)
+        {
+            if (cameras[i].gameObject.CompareTag("MainCamera"))
+            {
+                _inputCamera = cameras[i];
+                break;
+            }
+        }
+
+        if (_inputCamera == null)
+        {
+            Debug.LogError("NO CAMERA FOUND FOR MainCamera Tag");
+        }
+        //Create the camera from the factory after this
+        #else
+        _inputCamera = Camera.main;
+        #endif
+    }
+
     private void Update()
     {
         GetPointerPosition();

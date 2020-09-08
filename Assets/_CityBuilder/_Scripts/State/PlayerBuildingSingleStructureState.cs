@@ -4,25 +4,17 @@ using UnityEngine;
 
 public class PlayerBuildingSingleStructureState : PlayerState
 {
-    private PlacementManager _placementManager;
-    private GridStructure _grid;
-    
+    private BuildingManager _buildingManager;
+
     public PlayerBuildingSingleStructureState
-        (GameManager gameManager, 
-        PlacementManager placementManager, 
-        GridStructure grid) : base(gameManager)
+        (GameManager gameManager, BuildingManager buildingManager) : base(gameManager)
     {
-        this._placementManager = placementManager;
-        this._grid = grid;
+        this._buildingManager = buildingManager;
     }
 
     public override void OnInputPointerDown(Vector3 position)
     {
-        Vector3 gridPosition = _grid.CalculateGridPosition(position);
-        if (!_grid.IsCellTaken(gridPosition))
-        {
-            _placementManager.CreateBuilding(gridPosition, _grid);
-        }
+        _buildingManager.PlaceStructureAt(position);
     }
 
     public override void OnInputPointerChange(Vector3 position)
